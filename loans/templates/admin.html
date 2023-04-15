@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Loan List</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Genre</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Approved</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for loan in loans %}
+                <tr>
+                    <td>{{ loan.dni }}</td>
+                    <td>{{ loan.name }}</td>
+                    <td>{{ loan.last_name }}</td>
+                    <td>{{ loan.genre }}</td>
+                    <td>{{ loan.email }}</td>
+                    <td>{{ loan.amount }}</td>
+                    <td>{{ loan.approved }}</td>
+                    <td>
+                        <a href="{% url 'edit_loan' loan.id %}">Edit</a>
+                        <form method="post" action="{% url 'delete_loan' loan.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
